@@ -40,11 +40,12 @@ func TestToCamelWithoutAcronym(t *testing.T) {
 		{"b--b-._ \ta", "bBA"},
 		{"b--bC-._ \ta", "bBCA"},
 		{"bef--bC-._ \ta", "befBCA"},
-		{"xml___http", "xmlHTTP"},
-		{"xml.http", "xmlHTTP"},
-		{"_xml.http", "xmlHTTP"},
-		{"__xml.http__", "xmlHTTP"},
+		{"xml___http", "xmlHttp"},
+		{"xml.http", "xmlHttp"},
+		{"_xml.http", "xmlHttp"},
+		{"__xml.http__", "xmlHttp"},
 		{"URLString", "urlstring"},
+		{"doc_url", "docUrl"},
 	}
 	for _, test := range tests {
 		output := ToCamel(test.Input, WithoutAcronym())

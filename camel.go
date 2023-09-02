@@ -44,7 +44,7 @@ func ToCamel(s string, options ...Option) string {
 		case FirstUpper:
 			if isDelimiter(r) {
 				state = FirstWordEnd
-				return string(toCamel(input, wordStart, i))
+				return string(toCamel(input, wordStart, i, options))
 			}
 			if unicode.IsUpper(r) {
 				state = SecondUpper
@@ -54,7 +54,7 @@ func ToCamel(s string, options ...Option) string {
 		case SecondUpper:
 			if isDelimiter(r) {
 				state = FirstWordEnd
-				return string(toCamel(input, wordStart, i))
+				return string(toCamel(input, wordStart, i, options))
 			}
 			if unicode.IsUpper(r) {
 				state = UpperWord
@@ -64,12 +64,12 @@ func ToCamel(s string, options ...Option) string {
 		case Lower:
 			if isDelimiter(r) || unicode.IsUpper(r) {
 				state = FirstWordEnd
-				return string(toCamel(input, wordStart, i))
+				return string(toCamel(input, wordStart, i, options))
 			}
 		case UpperWord:
 			if isDelimiter(r) {
 				state = FirstWordEnd
-				return string(toCamel(input, wordStart, i))
+				return string(toCamel(input, wordStart, i, options))
 			}
 			if unicode.IsUpper(r) {
 				break
@@ -85,7 +85,7 @@ func ToCamel(s string, options ...Option) string {
 			acronymsMapRWMutex.RUnlock()
 			if acronym != "" {
 				state = FirstWordEnd
-				return string(toCamel(input, wordStart, i-1))
+				return string(toCamel(input, wordStart, i-1, options))
 			}
 			state = Lower
 		default:
@@ -103,11 +103,11 @@ func ToCamel(s string, options ...Option) string {
 	return string(input)
 }
 
-func toCamel(input []rune, firstWordStart, firstWordEnd int) []rune {
+func toCamel(input []rune, firstWordStart, firstWordEnd int, options []Option) []rune {
 	word := input[firstWordStart:firstWordEnd]
 	for i := range word {
 		word[i] = unicode.ToLower(word[i])
 	}
-	pascal := toPascal(input[firstWordEnd:])
+	pascal := toPascal(input[firstWordEnd:], options...)
 	return append(word, pascal...)
 }
