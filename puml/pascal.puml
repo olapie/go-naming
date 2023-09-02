@@ -6,8 +6,8 @@ state PascalCase {
   [*] --> Start :  ε
 
   Start --> Start : delimiters
-  Start --> Lower : isLowercase
-  Start --> Upper : isUppercase
+  Start --> Lower : lowercase
+  Start --> Upper : uppercase
   Start --> [*] : EOL
 
   Lower --> LowerWordEnd : delimiters

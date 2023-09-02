@@ -6,7 +6,50 @@ import (
 )
 
 var acronymsMapRWMutex sync.RWMutex
-var acronymsMap = map[string]string{
+var acronymsU2L = map[string]string{
+	"TCP":   "tcp",
+	"HTTP":  "http",
+	"UDP":   "udp",
+	"ID":    "id",
+	"SSL":   "ssl",
+	"TLS":   "tls",
+	"CPU":   "cpu",
+	"DOB":   "dob",
+	"TTL":   "ttl",
+	"SSO":   "sso",
+	"HTTPS": "https",
+	"IP":    "ip",
+	"XSS":   "xss",
+	"OS":    "os",
+	"SIP":   "sip",
+	"XML":   "xml",
+	"JSON":  "json",
+	"HTML":  "html",
+	"XHTML": "xhtml",
+	"XSL":   "xsl",
+	"XSLT":  "xslt",
+	"YAML":  "yaml",
+	"TOML":  "toml",
+	"WLAN":  "wlan",
+	"WIFI":  "wifi",
+	"VM":    "vm",
+	"JVM":   "jvm",
+	"UI":    "ui",
+	"URI":   "uri",
+	"URL":   "url",
+	"SLA":   "sla",
+	"SCP":   "scp",
+	"SMTP":  "smtp",
+	"SOA":   "soa",
+	"OA":    "oa",
+	"SVG":   "svg",
+	"PNG":   "png",
+	"JPG":   "jpg",
+	"JPEG":  "jpeg",
+	"PDF":   "pdf",
+	"IO":    "io",
+}
+var acronymsL2U = map[string]string{
 	"tcp":   "TCP",
 	"http":  "HTTP",
 	"udp":   "UDP",
@@ -54,7 +97,9 @@ var acronymsMap = map[string]string{
 func AddAcronym(acronyms ...string) {
 	acronymsMapRWMutex.Lock()
 	for _, acronym := range acronyms {
-		acronymsMap[strings.ToLower(acronym)] = acronym
+		lc := strings.ToLower(acronym)
+		acronymsL2U[lc] = acronym
+		acronymsL2U[acronym] = lc
 	}
 	acronymsMapRWMutex.Unlock()
 }
@@ -63,7 +108,8 @@ func AddAcronym(acronyms ...string) {
 func RemoveAcronym(acronyms ...string) {
 	acronymsMapRWMutex.Lock()
 	for _, acronym := range acronyms {
-		delete(acronymsMap, strings.ToLower(acronym))
+		delete(acronymsL2U, acronymsU2L[acronym])
+		delete(acronymsU2L, acronym)
 	}
 	acronymsMapRWMutex.Unlock()
 }

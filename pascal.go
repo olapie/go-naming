@@ -91,7 +91,10 @@ func toPascal(input []rune, options ...Option) []rune {
 
 func appendWord(s []rune, word []rune, ignoreAcronym bool) []rune {
 	if !ignoreAcronym {
-		if acronym, ok := acronymsMap[string(word)]; ok {
+		acronymsMapRWMutex.RLock()
+		acronym := acronymsL2U[string(word)]
+		acronymsMapRWMutex.RUnlock()
+		if acronym != "" {
 			return append(s, []rune(acronym)...)
 		}
 	}

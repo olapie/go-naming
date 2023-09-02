@@ -1,6 +1,9 @@
 package naming
 
-import "unicode"
+import (
+	"fmt"
+	"unicode"
+)
 
 func ToCamel(s string, options ...Option) string {
 	input := []rune(s)
@@ -54,9 +57,9 @@ func ToCamel(s string, options ...Option) string {
 				return string(toCamel(input, wordStart, i))
 			}
 			if unicode.IsUpper(r) {
-				state = Lower
-			} else {
 				state = UpperWord
+			} else {
+				state = Lower
 			}
 		case Lower:
 			if isDelimiter(r) || unicode.IsUpper(r) {
@@ -77,12 +80,16 @@ func ToCamel(s string, options ...Option) string {
 				state = Lower
 				break
 			}
-
-			if acronym := acronymsMap[string(input[wordStart:i-1])]; acronym != "" {
+			acronymsMapRWMutex.RLock()
+			acronym := acronymsU2L[string(input[wordStart:i-1])]
+			acronymsMapRWMutex.RUnlock()
+			if acronym != "" {
 				state = FirstWordEnd
 				return string(toCamel(input, wordStart, i-1))
 			}
 			state = Lower
+		default:
+			panic(fmt.Sprintf("invalid state: %d", state))
 		}
 	}
 
