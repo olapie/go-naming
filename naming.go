@@ -1,5 +1,7 @@
 package naming
 
+import "unicode"
+
 type Options struct {
 	ignoreAcronym bool
 }
@@ -72,10 +74,5 @@ func normalize(s string) []rune {
 }
 
 func isDelimiter(r rune) bool {
-	switch r {
-	case '_', '.', '-', ' ', '\t':
-		return true
-	default:
-		return false
-	}
+	return unicode.IsPunct(r) || unicode.IsSpace(r)
 }
