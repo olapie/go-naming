@@ -22,7 +22,7 @@ func TestToSnake(t *testing.T) {
 		{"HTTPRequestHandler", "http_request_handler"},
 	}
 	for _, test := range tests {
-		output := ToSnake(test.Input)
+		output := ToSnake(test.Input, WithAcronym())
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}
@@ -49,7 +49,7 @@ func TestToSnakeWithoutAcronym(t *testing.T) {
 		{"HTTPRequestHandler", "httprequest_handler"},
 	}
 	for _, test := range tests {
-		output := ToSnake(test.Input, WithoutAcronym())
+		output := ToSnake(test.Input)
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}

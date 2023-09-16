@@ -20,13 +20,13 @@ func ToSnake(s string, options ...Option) string {
 		UpperWordEnd
 	)
 
-	ignoreAcronym := false
+	useAcronym := false
 	if options != nil {
 		var opts Options
 		for _, fn := range options {
 			fn(&opts)
 		}
-		ignoreAcronym = opts.ignoreAcronym
+		useAcronym = opts.useAcronym
 	}
 
 	state := Start
@@ -98,7 +98,7 @@ func ToSnake(s string, options ...Option) string {
 			}
 
 			state = UpperWordEnd
-			if ignoreAcronym {
+			if !useAcronym {
 				state = Lower
 				break
 			}

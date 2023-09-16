@@ -3,14 +3,14 @@ package naming
 import "unicode"
 
 type Options struct {
-	ignoreAcronym bool
+	useAcronym bool
 }
 
 type Option func(options *Options)
 
-func WithoutAcronym() Option {
+func WithAcronym() Option {
 	return func(options *Options) {
-		options.ignoreAcronym = true
+		options.useAcronym = true
 	}
 }
 

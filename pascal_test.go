@@ -2,7 +2,7 @@ package naming
 
 import "testing"
 
-func TestToPascal(t *testing.T) {
+func TestToPascalWithAcronym(t *testing.T) {
 	type TestCase struct {
 		Input  string
 		Output string
@@ -20,7 +20,7 @@ func TestToPascal(t *testing.T) {
 		{"__xml.http__", "XMLHTTP"},
 	}
 	for _, test := range tests {
-		output := ToPascal(test.Input)
+		output := ToPascal(test.Input, WithAcronym())
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}
@@ -45,7 +45,7 @@ func TestToPascalWithoutAcronym(t *testing.T) {
 		{"__xml.http__", "XmlHttp"},
 	}
 	for _, test := range tests {
-		output := ToPascal(test.Input, WithoutAcronym())
+		output := ToPascal(test.Input)
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}

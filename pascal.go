@@ -20,13 +20,13 @@ func toPascal(input []rune, options ...Option) []rune {
 		UpperStart
 		End
 	)
-	ignoreAcronym := false
+	useAcronym := false
 	if options != nil {
 		var opts Options
 		for _, fn := range options {
 			fn(&opts)
 		}
-		ignoreAcronym = opts.ignoreAcronym
+		useAcronym = opts.useAcronym
 	}
 	state := Start
 	output := make([]rune, 0, len(input))
@@ -52,13 +52,13 @@ func toPascal(input []rune, options ...Option) []rune {
 			switch r {
 			case '_', '.', '-', ' ', '\t':
 				state = LowerWordEnd
-				output = appendWord(output, input[lowerStart:i], ignoreAcronym)
+				output = appendWord(output, input[lowerStart:i], useAcronym)
 				i-- // null transition
 				state = Start
 			default:
 				if unicode.IsUpper(r) {
 					state = UpperStart
-					output = appendWord(output, input[lowerStart:i], ignoreAcronym)
+					output = appendWord(output, input[lowerStart:i], useAcronym)
 					i-- // null transition
 					state = Upper
 				}
@@ -82,15 +82,15 @@ func toPascal(input []rune, options ...Option) []rune {
 		state = End
 	case Lower:
 		state = LastLowerWordEnd
-		output = appendWord(output, input[lowerStart:], ignoreAcronym)
+		output = appendWord(output, input[lowerStart:], useAcronym)
 		state = End
 	}
 
 	return output
 }
 
-func appendWord(s []rune, word []rune, ignoreAcronym bool) []rune {
-	if !ignoreAcronym {
+func appendWord(s []rune, word []rune, useAcronym bool) []rune {
+	if useAcronym {
 		acronymsMapRWMutex.RLock()
 		acronym := acronymsL2U[string(word)]
 		acronymsMapRWMutex.RUnlock()

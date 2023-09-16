@@ -2,7 +2,7 @@ package naming
 
 import "testing"
 
-func TestToCamel(t *testing.T) {
+func TestToCamelWithAcronym(t *testing.T) {
 	type TestCase struct {
 		Input  string
 		Output string
@@ -21,7 +21,7 @@ func TestToCamel(t *testing.T) {
 		{"URLString", "urlString"},
 	}
 	for _, test := range tests {
-		output := ToCamel(test.Input)
+		output := ToCamel(test.Input, WithAcronym())
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}
@@ -48,7 +48,7 @@ func TestToCamelWithoutAcronym(t *testing.T) {
 		{"doc_url", "docUrl"},
 	}
 	for _, test := range tests {
-		output := ToCamel(test.Input, WithoutAcronym())
+		output := ToCamel(test.Input)
 		if output != test.Output {
 			t.Fatalf("Test %s, got %s, want %s", test.Input, output, test.Output)
 		}
