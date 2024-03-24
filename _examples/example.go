@@ -14,45 +14,57 @@ func main() {
 	exampleSnakeToPascal()
 	exampleSnakeToPascalWithAcronym()
 	examplePascalToKebab()
+	examplePascalToKebabWithAcronym()
+	exampleCustomAcronym()
 }
 
 func exampleCamelToSnake() {
-	camel := "userId"
-	fmt.Println(naming.ToSnake(camel)) // output: user_id
+	camel := "httpRequestId"
+	fmt.Println(naming.ToSnake(camel)) // output: http_request_id
 }
 
 func examplePascalToSnake() {
-	pascal := "UserId"
-	fmt.Println(naming.ToSnake(pascal)) // output: user_id
+	pascal := "HttpRequestId"
+	fmt.Println(naming.ToSnake(pascal)) // output: http_request_id
 }
 
 func examplePascalToSnakeWithAcronym() {
-	//naming.AddAcronym("ID")
 	pascal := "HTTPRequestID"
-	fmt.Println(naming.ToSnake(pascal, naming.WithAcronym())) // output: user_id
+	fmt.Println(naming.ToSnake(pascal, naming.WithAcronym())) // output: http_request_id
 }
 
 func exampleSnakeToCamel() {
-	snake := "user_id"
-	fmt.Println(naming.ToCamel(snake)) // output: userId
+	snake := "http_request_id"
+	fmt.Println(naming.ToCamel(snake)) // output: httpRequestId
 }
 
 func exampleSnakeToCamelWithAcronym() {
-	snake := "user_id"
-	fmt.Println(naming.ToCamel(snake, naming.WithAcronym())) // output: userID
+	snake := "http_request_id"
+	fmt.Println(naming.ToCamel(snake, naming.WithAcronym())) // output: httpRequestID
 }
 
 func exampleSnakeToPascal() {
-	snake := "user_id"
-	fmt.Println(naming.ToPascal(snake)) // output: UserId
+	snake := "http_request_id"
+	fmt.Println(naming.ToPascal(snake)) // output: HttpRequestId
 }
 
 func exampleSnakeToPascalWithAcronym() {
-	snake := "user_id"
-	fmt.Println(naming.ToPascal(snake, naming.WithAcronym())) // output: UserID
+	snake := "http_request_id"
+	fmt.Println(naming.ToPascal(snake, naming.WithAcronym())) // output: HTTPRequestID
 }
 
 func examplePascalToKebab() {
-	pascal := "UserID"
-	fmt.Println(naming.ToKebab(pascal)) // output: user_id
+	pascal := "HttpRequestId"
+	fmt.Println(naming.ToKebab(pascal)) // output: http-request-id
+}
+
+func examplePascalToKebabWithAcronym() {
+	pascal := "HTTPRequestID"
+	fmt.Println(naming.ToKebab(pascal)) // output: http-request-id
+}
+
+func exampleCustomAcronym() {
+	pascal := "CUSTOMAcronym"
+	naming.AddAcronym("CUSTOM")
+	fmt.Println(naming.ToSnake(pascal, naming.WithAcronym())) // output: custom_acronym
 }
