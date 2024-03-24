@@ -9,7 +9,7 @@ Use Acronym for Acronym/Initialism
 
 ## Module path  
 
-    `go.olapie.com/naming`
+    go.olapie.com/naming
 
 
 ## Examples
