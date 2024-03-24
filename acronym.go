@@ -99,7 +99,7 @@ func AddAcronym(acronyms ...string) {
 	for _, acronym := range acronyms {
 		lc := strings.ToLower(acronym)
 		acronymsL2U[lc] = acronym
-		acronymsL2U[acronym] = lc
+		acronymsU2L[acronym] = lc
 	}
 	acronymsMapRWMutex.Unlock()
 }
