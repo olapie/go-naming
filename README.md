@@ -7,6 +7,11 @@ Use Acronym for Acronym/Initialism
 * Initialism: ID (identity document) 
 
 
+## Module path  
+
+    `go.olapie.com/naming`
+
+
 ## Examples
 
 ``` 
